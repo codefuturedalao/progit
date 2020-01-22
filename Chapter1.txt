@@ -1,0 +1,22 @@
+What is Git?
+	1. SnapShots,Not Differences
+	2. Nearly Every Operation is Local
+Three States:
+	1. Modified	 (was changed since it was cheched out but has boe been staged)
+	2. Staged	 (has been modified and was added to the staging area)
+	3. Committed (in Git Directory)
+
+Three main sections of a git project:
+	1. Working Directory:	is a single checkout of one version of the project
+	2. Staging Area: is a file, generally contained in your Git directory,
+	that stores information about what will go into your next commit.
+	3. Git Directory: is where Gir stores the metadata and onject database for
+	your project.
+
+The basic Git workflow goes something like this:
+	1. you modify files in your working tree.
+	2. you selectively stage just those changes you want to be part of your
+	next commit, which adds only those changes to the staging area.
+	3. you do a commit, which takes the files as they are in the staging area
+	and stores that sanpshot premanently to your Git directory.
+
