@@ -19,4 +19,4 @@ The basic Git workflow goes something like this:
 	next commit, which adds only those changes to the staging area.
 	3. you do a commit, which takes the files as they are in the staging area
 	and stores that sanpshot premanently to your Git directory.
-
+								2020.1.22

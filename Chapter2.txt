@@ -1,0 +1,29 @@
+1. Geting a Git Repository
+1.1 intializing a repository in an existing directory
+	git init
+1.2 cloning an Existing repository
+	git clone https://
+	git clone https://xxx yyy(xxx's alias name)
+	but you may also see git:// or user@server:path/to/repo.git, which uses the
+SSH transfer protocol.
+
+2. Recording Changes to the Repository
+	Remember that each file in your working directory can be in one of two
+	states: tracked or untracked.
+	Tracked files are files that were in the last snapshot; they can be
+	unmodified,modified,staged.In short,tracked files are files that Git knows
+	about.
+	Untracked files are everything else----any files in your working directory
+	that were not in your last snapshot and are not in your staging area.
+2.1 Checking the Status of Your Files
+	git status
+2.2 Tracking New Files
+	git add
+	the git add command takes a path name for either a file or a directory, if
+	it's a directory, the command adds all the files in that directory
+	recursively.
+3.3 Staging Modified Files
+	git add
+	Caution: Git staged a file exactly as it is when you run the git add
+	command. if you modify a file after you run git add,you HAVE TO run git
+	add to stage the LATEST version of the file
