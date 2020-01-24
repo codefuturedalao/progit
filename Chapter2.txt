@@ -22,8 +22,121 @@ SSH transfer protocol.
 	the git add command takes a path name for either a file or a directory, if
 	it's a directory, the command adds all the files in that directory
 	recursively.
-3.3 Staging Modified Files
+2.3 Staging Modified Files
 	git add
 	Caution: Git staged a file exactly as it is when you run the git add
 	command. if you modify a file after you run git add,you HAVE TO run git
 	add to stage the LATEST version of the file
+2.4 Short Status
+	git status ---->wordy
+	git status -s
+
+	There are two columns to the output---the lefthand column indicates the
+	status of the staging area and the right-hand column indicates the status
+	of the working tree.
+	example:
+	    $ git status -s
+		 M	README				is modified in working tree but not staged		
+		MM	RakeFile			is modified after staged
+		A	lib/git.rb			new files have been added to the staging area 
+		M	lib/simplegit.rb	is modifed and staged
+		??	LICENSE.txt			new files aren't tracked yet
+2.5 Ignoring Files
+	//todo-----------------------------------------------------------------
+2.6 Viewing Your Staged abd Unstaged Changes
+	if git status command is too vague for you---you want to know exactly what
+	you changed,you can use
+		git diff
+	to answer these two question:
+	What have you changed but not yet staged?			git diff
+	What have you staged you are about to commit?		git diff --staged
+2.7 Commmit your Changes
+	git commit
+	git commit -v (add differ in you commit message)
+	git commit -m "message"
+2.8 Skipping the Staging Area
+	git commit -a
+	makes Git automaticallt stage every file that is already tracked before
+	doing the commit.letting you skip the git add part
+2.9 Removing Files
+	git rm		remove it from tracked files and also remove the file from
+			your working directory
+	git rm -f	 if u modified the file or had already added it to the staging area,you
+			 must force the removal with the -f option
+	git rm --cached	if u want to keep the file in your working tree but
+			remove it from your staging area.
+
+	if you simply remove the file from your working directory,it shows up
+	under the "Changes not staged for commit"
+	then, if you run git rm, it staged the file's removal;
+2.10 Moving Files
+	git mv	file_from file_to
+	if you want to rename a file in Git
+	it is equivalent to running something like this:
+		$ mv file_from file_to
+		$ git rm file_from
+		$ git add file_to
+	the only difference is that git mv is one commad instead of three
+3  Viewing the Commit History
+	git log				lists the commits made in taht repository in reverse
+					chronological order.
+	git log -p			displays the same information but with a diff directly
+					following each entry.
+	git log --stat      displays some abbreviated stats for each commit.it
+					will print a list of modified files, and how many lines in
+					those files were added and removed.
+	git log --pretty=oneline/short/format
+					
+	author & committer. the author is the person who originally wrote the
+					work, whereas the commiter is the person who last applied
+					the work.
+
+	git log --graph		display an ASCII graph of the branch and merge history
+					beside the log output.
+3.1 Limiting Log Output
+	-<n>		where n is ant integer to show the last n commits
+	--since		limit the commits to those made after the specified date
+	--until		limit the commits to those made before the specified date
+	--author
+	--committer
+	--grep		only show commits with a commit message contanning the string
+	-S			only show commits adding or removing code matching the string
+	--no-merges only show commits that are not merged
+4  Undoing Things
+	git commit --amend			if you want to redo that commit,make the
+					additional changeds you forgot, and commit again using the
+					--amend option. If you've made no changes since your last
+					commit, then your snapshot will look exactly the same, and
+					all you'll change is your commit message.
+4.1 UnStaging a Staged File
+	git reset HEAD 
+4.2 Unmodifying a Modified File
+	git checkout --			that is a dangerous command. Any local changes you
+					made to that file are gone.
+
+5. Working with Remotes
+	To be able to collaborate on any Git project, you need to know how to
+	manage your remote repositories
+5.1 Showing your remotes
+	git remote			lists the shortnames of each handle you've specified
+	git remote -v		shows you the urls taht git has stored for the
+					shortname to be used
+5.2 Adding Remote Repositories
+	git clone implicitly adds origin remote for you.
+	git remote add <shortname><url>		to add a new remote Git repositories
+5.3 Fetching and Pulling from Your Remotes
+	git fetch <remote>
+	It's important that git fetch command omly downloads the data to your
+	local repository----it doesn't automatically meerge it manually into your
+	work or modify what you're currently working on.
+	git pull remote
+	automatically fetch and the merge that remote branch into your current
+	branch
+5.4 Pushing to Your Remotes
+	git push <remote> <branch>
+5.5 Inspecting a Remote
+	git remote show <remote>		see more info about a particular remote.
+5.6 Renaming and Removing Remotes
+	git remote rename <name_from> <name_to>
+	git remote remove <remote>
+6  Tagging
