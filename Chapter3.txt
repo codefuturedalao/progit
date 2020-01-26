@@ -1,1 +1,14 @@
-author : JacksonSang
+What is a branch?
+	a branch in Git is simply a lightweight movable pointer to one of these
+	commits
+1. Creating a New Branch
+	git branch <branchName>
+	1. What happens when you create a new branch? 
+		Well, doing so creates a new pointer for you to move around.
+	2. How does Git know what branch you're currently on?
+		It keeps a special pointer called HEAD.
+	Notice: the git branch command only created a new branch--it didn't switch
+	to that branch.
+2. Switching Branches
+	git checkout <branchName>
+	
