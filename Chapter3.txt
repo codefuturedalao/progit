@@ -1,4 +1,7 @@
 1. Git Branching 
+
+	git branch <branchName>
+
 	Branching means you diverge from the main line of developmeny and continue
 	to work without mess with that main line
 
@@ -14,4 +17,10 @@
 	
 	3. how does Git know what branch you're currently on?
 		It keeps a special pointer caled HEAD
-
+1.1 Switching Branches
+	git checkout <branchName>					(tag is the same usage,see in Chapter2.txt)
+	
+	git checkout -b <branchName>		create a new branch adn switch to it
+	Notice:		if you don't commit your changes and you checkout,you will lose 
+			your changes!
+	
