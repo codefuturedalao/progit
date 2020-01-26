@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 1. Git Branching 
 
 	git branch <branchName>
@@ -24,4 +23,105 @@
 	git checkout -b <branchName>		create a new branch adn switch to it
 	Notice:		if you don't commit your changes and you checkout,you will lose 
 			your changes!
+1.2 Merging Branches
+	direct merge					directly move pointer
+	three-way merge					recreate a commit
+
+2. Branch Management
+	$ git branch				Notice: * prefix means which branch u're on
+	$ git branch --merged			see which branches are already merged into
+								the branch you're on
 	
+3. Branching Workflows
+	some common workflows
+3.1 Long-Running Branches
+	You can always have several branches that are always open and that you use
+	for different stages of your development cycle; you can merge regularly
+	from some of them into others.
+	example: having onli code that is entirely stable in their master branch
+	--possibly only code that has been or will be released. They have another
+	parallel branch named develop or next that they work form or use to test
+	stability ----it isn't necessarily always stable, but whenever it gets to
+	a stable state, it can be merged into master.
+3.2 Topic Branches
+	A topic branch is a short-lived branch that you create and use for a
+	single particular feature or related work.  
+
+	All the changes in that branch have to do with that topic!
+	it's easier to see what has happened during code review and such
+
+4. Remote Branches
+	Remote references are references(pointers) int your remote
+	repositories,including branches,tags,and so on.
+
+	Git's clone command automatically names it origin for you, pulls down all
+	its data, creates a pointer to where its master branch is, and names it
+	origin/master locally. Git alsow gives you your own local master branch
+	starting at the same place as orgin's master branch,so you have something
+	to work from.
+
+	Git fetch fetches ant data from it that you don't yet have and updates
+	your localdatabase, moving your origin/master pointer to it's new, more
+	up-to-date position.
+
+4.1 Pushing
+	git push <remote> <branch>					Git automatically expands the
+							<branch> branchname out to
+							refs/heads/branch:refs/heads/branch  which means
+							"Take my <branch> local branch and push it to update
+							the remote's <branch> branch"
+	you can also do 
+	git push <remote> <branch>:<branch>
+	
+	It's important to know that when you do a fetch that brings down new
+	remote-tracking branches, you don't automatically have local, editable
+	copies of them. In other words, in this case, you don't have a new
+	serverfix branhch --you have only an origin/serverfix pointer that you
+	can't modify.
+	To merge this work into your current working branch, you canrun git merge
+	origin/serverfix. If you want your own serverfix branhch that you can work
+	on, you can base it off your remote-tracking branch:
+	
+	git checkout -b serverfix origin/serverfix
+4.2 Tracking branches
+	Checking our a local branch from a remote-tracking branch automatically
+	creates what is called a "tracking branch"(and the branch it tracks is
+	called an "upstream branch").
+	Tracking Branches are local branches that have a direct relationship to a
+	remote branch.
+
+	git checkout -b <branch> <remote>/<branch>
+	shortcut:
+	git checkout --track <remote>/<branch>
+	shortcut for shortcut:if teh branch name you're trying to checkout doesn't
+	exist and exactly matched a name on only one remote,Git will create a
+	tracking branch for you.
+	git checkout <branch>
+	
+	git branch -u <remote>/<branch>				if you already have a local
+								branch and want to set it to a remote branch
+								you just pulled down, or want to change the
+								upstream branch the upstream branch you're
+								tracking
+
+	Upstream shorthand 
+	When you have a tracking branch set up, you can reference its upstream
+	branch with the @{upstream} or @{u} shorthand. So if you're on the master
+	branch and it's tracking origin/master, you can say something like git
+	merge @{u} instead of git merge origin/master if you wish
+	
+	git branch -vv		see what tracking branches you have set up
+4.3 Pulling
+4.4 Deleting Remote Branches
+	git push origin --delete serverfix
+
+	Basically all this dose is remove the pointer from the server.
+
+5. Rebasing
+	
+6. Rebase vs. Merge
+	In general the way to get the best of both worlds is to rebase local
+	changes you've made but haven't shared yet before you push them in order
+	to clean up your history, but never rebase anything you've pushed
+	somewhere.
+
