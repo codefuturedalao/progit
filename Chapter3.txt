@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 1. Git Branching 
 
 	git branch <branchName>
