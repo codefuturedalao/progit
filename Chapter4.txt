@@ -1,0 +1,107 @@
+1. Distributed Git
+	In this chapter, you'll see how to work with Git in a distributed
+	environment as a contributor adn an integrator.
+2. Distributed Workflows
+
+2.1 Centralized Workflow
+	This means that if two developers clone from the hub and both make
+	changes, the first developer to push their changes back up can do so with
+	no problemsThe second developer must merge in the first one's work vefore
+	pushing changes uo,so as not to overwrite the first developer's changes.
+2.2 Integration-Manager Workflow
+	Because Git allows you to have multiple remote repositories, it's possible
+	to have a workflow where each developer has write access to their own
+	public repository and read access to everyone else's. This scenario often
+	includes a canonical repository that represents the "official" project
+	1. The project maintainer pushes to their public repository
+	2. A contributor clones that repository and makes changes
+	3. The contributor pushes to their own public copy
+	4, The contributor sends the maintainer an email asking them to pull
+	changes.
+	5. The maintainer adds the contributor's repository as a remote and merges
+	locally
+	6. The maintainer pushes merged changes to the main repository
+2.3 Dictator and Lieutenants Workflow
+	This is a variant of a multiple-repository workflow.
+	It's generally used by huge projects with hundreds of collaborators;
+	One famous example is the Linux Kernel.
+	1. Regular developers work on their topic branch and rebase their work on
+	top of master. The master branch is that of the reference repository to
+	which the dictator pushes
+	2. Lieutenants merge the developer's topic branches into the their master
+	branch.
+	3. The dictator merges the lieutenants'master branches into the dictator's
+	master branch.
+	4. Finally,the dictator pushes that master branch to the reference
+	repository so the other developers can rebase on it.
+2.4 Workflows Summary
+	
+3. Contributing to a Project
+	Every project is a bit different.
+	1. active contributor count
+	2. workflow used for the project
+	3. commit access
+	All these questions can affect how you contribute effectively to a project
+	and what workflows are prefered or available to you.
+
+3.1 Commit Gudielines
+	1. First. your submissions should not contain any whitespace errors. Git
+	provides an easy way to check for this---vefore you commit,run git diff
+	--check,which indentifies possible whitespace errors and lists them for
+	you.
+	2. Next,try to make each commit a logically separate changeset. If you can
+	, try to make your changes digestible.
+	3. The last thing to keep in mind is the commit message. Getting in the
+	habit of creating quality commit messages makes using and collaborating
+	with Git a lot easier.
+	As a general rule, your messages should 
+	start with a single line that's no more that about 50 characters and that
+	describes the changeset concisely,
+	followed by a blank linem
+	followed by a more detailed explanation:
+						your motivation for change
+						contrast its implementation with previous behavior
+
+3.2 Private Small Team
+	You work for a while(generally in a topic branch), and merge that work
+	into you master branch when it's ready to be integrated.
+	When you want to share that work, you fetch and merge your master from 
+	origin/master if it has changed, and finally push to the master branch on
+	the server. The general sequence is something like this.
+3.3 Private Managed Team
+3.4 Forked Public Project
+	Contributing to public projecys is a bit different. Because you don't have
+	the permissions to directly update branches on the project, you have to
+	get the work to the maintainers some other way.
+
+	1. First, you'll probabluy want to clone the main repository,create a
+	topic branch for the patch or patch series you're planning to cntribute,
+	and do your work there.
+
+	git clone 
+	git checkout -b featureA
+	git commit -m
+
+
+	2.When your branch work is finished and you're ready to contribute it back
+	to the maintainers, go to the original project page and click the "Fork"
+	button, creating your own writable fork of the project.you then need to
+	add this repository URL as a new remote of your local repository;
+	
+	git remote add myfork <url>
+
+	you then need to push your new work to this repository. It's easiest 
+	to push thetopic branch you're working on to your forked repository
+	,rather thanmerging that work into your master branch and pushing that.
+		The reason is that if your work in't accept or is cherry-picked, you
+		don't have to rewind your master branch.
+	git push -u myfork featureA
+	3. Once your work has been pushed to your fork of the repository, you need
+	to notify maintainers of the original project that you have work, you'd
+	like them to merge. This is often called a pull request, and you typically
+	generate such a request either via the website---Github has its own "Pull
+	Request" mechanism that we'll go over in GitHub or you can run the git
+	request-pull command and email the subsequent output to the project
+	maintainer manually.
+3.5 Summary 
+	
