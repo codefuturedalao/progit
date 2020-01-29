@@ -1,0 +1,46 @@
+1. Github
+	① Clone our fork of the project locally 
+	② Create a descriptive topic branch 
+	③ Make our change to the code
+	④ Check that the change is good 
+	⑤ Commit our change to the topic branch 
+	⑥ Push our new topic branch back up to our GitHub fork
+	
+2. Keep your GitHub public repository up-to-date
+Once you’ve forked a GitHub repository, your repository (your "fork") exists
+independently from the original. In particular, when the original repository
+has new commits, 
+
+	One possibility to do this requires no configuration. For example, if you
+forked from https://github.com/progit/progit2.git, you can keep your master
+branch up-to-date like this:
+
+	$ git checkout master 
+	$ git pull https://github.com/progit/progit2.git 
+	$ git push origin master
+This works, but it is a little tedious having to spell out the fetch URL every
+time. You can automate this work with a bit of configuration:
+
+$ git remote add progit https://github.com/progit/progit2.git 
+$ git branch --set-upstream-to=progit/master master 
+$ git config --local remote.pushDefault origin 
+① Add the source repository and give it a name. Here, I have chosen to call it
+progit.
+② Set your master branch to fetch from the progit remote.
+③ Define the default push repository to origin.
+Once this is done, the workflow becomes much simpler:
+
+$ git checkout master 
+$ git pull 
+$ git push 
+① If you were on another branch, return to master. 
+② Fetch changes from progit and merge changes into master. 
+③ Push your master branch to origin.
+
+This approach can be useful, but it’s not without downsides. Git will happily
+do this work for you silently, but it won’t warn you if you make a commit to
+master, pull from progit, then push to origin — all of those operations are
+valid with this setup. So you’ll have to take care never to commit directly to
+master, since that branch effectively belongs to the upstream repository
+
+
