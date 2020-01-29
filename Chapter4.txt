@@ -118,3 +118,99 @@
 	project, you need to apply the patch in your topic branch to evaluate it.
 	There are two ways to apply an eamiled patch: with git apply or with git
 	am.
+4.3 Determing What is Introduced
+	It’s often helpful to get a review of all the commits that are in this
+	branch but that aren’t in your master branch. You can exclude commits in
+	the master branch by adding the --not option before the branch name. This
+	does the same thing as the master..contrib format that we used earlier.
+	For example, if your contributor sends you two patches and you create a
+	branch called contrib and applied those patches there, you can run this:
+
+	$ git log contrib --not master commit
+	5b6235bd297351589efc4d73316f0a68d484f118 Author: Scott Chacon
+	<schacon@gmail.com> Date:   Fri Oct 24 09:53:59 2008 -0700
+	    seeing if this helps the gem
+	commit 7482e0d16d04bea79d0dba8988cc78df655f16a0 Author: Scott Chacon
+	<schacon@gmail.com> Date:   Mon Oct 22 19:38:36 2008 -0700
+	    updated the gemspec to hopefully work better
+
+	To see a full diff of what would happen if you were to merge this topic
+	branch with another branch, you may have to use a weird trick to get the
+	correct results. 
+
+	$ git diff master
+	
+	This command gives you a diff, but it may be misleading. If your master
+	branch has moved forward since you created the topic branch from it, then
+	you’ll get seemingly strange results. This happens because Git directly
+	compares the snapshots of the last commit of the topic branch you’re on
+	and the snapshot of the last commit on the master branch. For example, if
+	you’ve added a line in a file on the master branch, a direct comparison of
+	the snapshots will look like the topic branch is going to remove that
+	line.
+	If master is a direct ancestor of your topic branch, this isn’t a problem;
+	but if the two histories have diverged, the diff will look like you’re
+	adding all the new stuff in your topic branch and removing everything
+	unique to the master branch.
+	What you really want to see are the changes added to the topic
+	branch — the work you’ll introduce if you merge this branch with master.
+	You do that by having Git compare the last commit on your topic branch
+	with the first common ancestor it has with the master branch.
+	Technically, you can do that by explicitly figuring out the common
+	ancestor and then running your diff on it:
+	
+	$ git merge-base contrib master 
+	36c7dba2c95e6bbb78dfa822519ecfec6e1ca649 
+	$ git diff 36c7db
+	or, more concisely:
+	$ git diff $(git merge-base contrib master)
+	
+	However, neither of those is particularly convenient, so Git provides
+	another shorthand for doing the same thing: the triple-dot syntax. In the
+	context of the git diff command, you can put three periods after another
+	branch to do a diff between the last commit of the branch you’re on and
+	its common ancestor with another branch:
+	
+	$ git diff master...contrib
+	
+	This command shows you only the work your current topic branch has
+	introduced since its common ancestor with master. That is a very useful
+	syntax to remember.
+4.4 Integrating Contributed Work
+	1. Merging Workflows
+	2. Large-Merging Workflows
+	3. Rebasing and Cherry-Picking Workflows     to keep a mostly linear
+	history
+		Cherry-Picking is useful if you have a number of commits on a topic
+		branch and you want to integrate only one of them, or if you only have
+		one commit on a topic branch and you'd prefer to cherry-pick it rather
+		that run rebase.
+	4. Rerere
+		If you're doing lots of merging and rebasing, or you're maintaining a
+		long-lived topic branch, Git has a feature called "rerere" that can
+		help.
+		Rerere stands for "reuse recorded resolution"--it's a way of
+		shortcutting manual conflict resolution. When rerere is enabled, Git
+		will keep a set of pre- and post-images from successful merges, and if
+		it notices that there’s a conflict that looks exactly like one you’ve
+		already fixed, it’ll just use the fix from last time, without
+		bothering you with it.
+		This feature comes in two parts: a configuration setting and a
+		command. The configuration setting is rerere.enabled, and it’s handy
+		enough to put in your global config:
+
+		$ git config --global rerere.enabled true
+		
+		Now, whenever you do a merge that resolves conflicts, the resolution
+		will be recorded in the cache in case you need it in the future.
+
+		If you need to, you can interact with the rerere cache using the git
+		rerere command. When it’s invoked alone, Git checks its database of
+		resolutions and tries to find a match with any current merge conflicts
+		and resolve them (although this is done automatically ifrerere.enabled
+		is set to true). There are also subcommands tosee what will be
+		recorded, to erase specific resolution from thecache, and to clear
+		the entire cache. We will cover rerere in more detail in Rerere.
+4.5 Tagging Your Releases
+	When you've decided to cut a release, you'll probably want to assign a tag
+	so you can re-create that release at any point going forward.

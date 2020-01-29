@@ -197,5 +197,6 @@ SSH transfer protocol.
 		git config --global alias.unstage 'reset HEAD --'
 
 		git unstage fileA   ==   git reset HEAD -- fileA
-
-													--author = JacksonSang
+														
+														
+													author = JacksonSang
