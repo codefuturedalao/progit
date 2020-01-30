@@ -43,4 +43,3 @@ master, pull from progit, then push to origin — all of those operations ar
 valid with this setup. So you’ll have to take care never to commit directly to
 master, since that branch effectively belongs to the upstream repository
 
-
